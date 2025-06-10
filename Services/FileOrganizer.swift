@@ -157,6 +157,7 @@ class FileOrganizer: ObservableObject {
         guard index < rules.count else { return }
         rules[index] = newRule
         saveSettings()
+        scanNow()
         showStatus("Rule updated")
     }
 
