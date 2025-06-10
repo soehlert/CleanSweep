@@ -5,11 +5,11 @@
 CleanSweep is a lightweight macOS utility that automatically organizes your folder by moving files into categorized subfolders based on their file type.
                                     
 ## Screenshots
-![Welcome Window](screenshots/welcome-window.png)
-![Monitoring Window](screenshots/monitoring-window.png)
-![Rules Window](screenshots/rules-window.png)
-![Add Rule Window](screenshots/add-rule-window.png)
-![Recent Activity Window](screenshots/recent-activity-window.png)
+![Welcome Window](Images/welcome-window.png)
+![Monitoring Window](Images/monitoring-window.png)
+![Rules Window](Images/rules-window.png)
+![Add Rule Window](Images/add-rule-window.png)
+![Recent Activity Window](Images/recent-activity-window.png)
 
 ## Features
 - Monitors your folder in real-time
