@@ -8,7 +8,7 @@ CleanSweep is a lightweight macOS utility that automatically organizes your fold
 ![Welcome Window](Images/welcome-window.png)
 ![Monitoring Window](Images/monitoring-window.png)
 ![Rules Window](Images/rules-window.png)
-![Add Rule Window](Images/add-rule-window.png)
+![Add Rule Window](Images/add-rules-window.png)
 ![Recent Activity Window](Images/recent-activity-window.png)
 
 ## Features
