@@ -26,8 +26,8 @@ CleanSweep is a lightweight macOS utility that automatically organizes your fold
 1. Download the latest release ZIP file from the [releases page](../../releases)
 2. Extract the ZIP file to reveal the CleanSweep app
 3. Move CleanSweep.app to your Applications folder
-4. Right-click on CleanSweep and select "Open"
-5. It will tell you it wants to move it to the trash or cancel opening
+4. Open CleanSweep
+5. It will tell you it wants to "Move to Trash" or "Done" - click Done
 6. Open System Settings
 7. Privacy & Security
 8. In the Security subsection there will be something saying "CleanSweep was blocked to protect your mac" click open anyway
