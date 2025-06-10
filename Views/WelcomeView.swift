@@ -21,7 +21,7 @@ struct WelcomeView: View {
                         .foregroundColor(.secondary)
                 }
 
-                Toggle("Use default organization rules", isOn: $useDefaultRules)
+                Toggle("Use default organizing rules", isOn: $useDefaultRules)
 
                 if useDefaultRules {
                     Text("This will create 6 default rules for your downloads folder (Music, Images, Documents, Videos, Archives, Code)")

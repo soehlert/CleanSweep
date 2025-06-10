@@ -10,6 +10,8 @@ import SwiftUI
 struct RulesView: View {
     @ObservedObject var organizer: FileOrganizer
     @State private var showingAddRule = false
+    @State private var showingEditRule = false
+    @State private var editingRuleIndex: Int = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -32,7 +34,7 @@ struct RulesView: View {
                     .font(.title2)
                     .foregroundColor(.blue)
                 
-                Text("Organization Rules")
+                Text("Organizing Rules")
                     .font(.title)
                     .fontWeight(.bold)
                 
@@ -84,6 +86,13 @@ struct RulesView: View {
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
                                 
+                                Button("Edit") {
+                                    editingRuleIndex = index
+                                    showingEditRule = true
+                                }
+                                .buttonStyle(.bordered)
+                                .controlSize(.small)
+                                
                                 Button("Delete") {
                                     organizer.removeRule(at: index)
                                 }
@@ -98,6 +107,9 @@ struct RulesView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $showingEditRule) {
+            EditRuleView(organizer: organizer, ruleIndex: editingRuleIndex)
         }
     }
 }

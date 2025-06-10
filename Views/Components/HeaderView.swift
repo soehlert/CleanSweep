@@ -95,7 +95,7 @@ struct HeaderView: View {
             )
         case 1:
             return (
-                title: "Organization Rules",
+                title: "Organizing Rules",
                 subtitle: "The bold word of the rule represents the folder name to house those file extensions",
                 dynamicInfo: "\(organizer.rules.count) rules configured"
             )
