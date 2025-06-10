@@ -31,6 +31,7 @@ CleanSweep is a lightweight macOS utility that automatically organizes your fold
 6. Open System Settings
 7. Privacy & Security
 8. In the Security subsection there will be something saying "CleanSweep was blocked to protect your mac" click open anyway
+![Opening Instructions](Images/open-instructions.png)
 
 > **Important Security Note**
 > Since this app is signed with a personal developer certificate rather than distributed through the Mac App Store, macOS will initially block it. This is normal behavior for apps distributed outside the App Store. Im not going to pay 100 dollars a year to distribute a free application I made mostly for myself. 
