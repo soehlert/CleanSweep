@@ -61,6 +61,7 @@ struct EditRuleView: View {
 
                 Button("Save") {
                     saveRule()
+                    organizer.scanNow()
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(folderName.isEmpty || fileExtensions.isEmpty)
