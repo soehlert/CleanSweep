@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+import os.log
+
 
 // Convenience functions to make life a little easier
 extension SettingsManager {
@@ -39,6 +41,8 @@ class FileOrganizer: ObservableObject {
     private let settingsManager = SettingsManager()
     private var fileSystemWatcher: DispatchSourceFileSystemObject?
     private var watchedFolderDescriptor: Int32 = -1
+    private let logger = Logger(subsystem: "com.soehlert.CleanSweep", category: "FileOrganizer")
+
 
     // Single background queue for all file operations
     private let backgroundQueue = DispatchQueue(label: "com.cleansweep.fileorganizer", qos: .background)
@@ -50,11 +54,11 @@ class FileOrganizer: ObservableObject {
         loadSettings()
 
         if !isFirstRun {
-            print("Starting monitoring because !isFirstRun is true")
+            logger.debug("Starting monitoring because !isFirstRun is true")
             scanNow()
             startMonitoring()
         } else {
-            print("NOT starting monitoring because isFirstRun is true")
+            logger.debug("NOT starting monitoring because isFirstRun is true")
         }
     }
 
@@ -88,18 +92,16 @@ class FileOrganizer: ObservableObject {
         do {
             let settingsResult = try settingsManager.loadSettings()
             if let existingSettings = settingsResult {
-                print("Found existing settings: isFirstRun = \(existingSettings.isFirstRun)")
                 self.rules = existingSettings.rules
                 self.watchedFolder = URL(fileURLWithPath: existingSettings.watchedFolderPath)
                 self.isFirstRun = existingSettings.isFirstRun
                 showStatus("Settings loaded")
             } else {
-                print("No existing settings found, setting isFirstRun = true")
                 self.rules = []
                 self.isFirstRun = true
             }
         } catch {
-            print("Error loading settings: \(error), setting isFirstRun = true")
+            logger.error("Error loading settings: \(error), setting isFirstRun = true")
             self.rules = []
             self.isFirstRun = true
         }
@@ -149,6 +151,13 @@ class FileOrganizer: ObservableObject {
         rules.remove(at: index)
         saveSettings()
         showStatus("Rule removed")
+    }
+    
+    func updateRule(at index: Int, with newRule: OrganizingRule) {
+        guard index < rules.count else { return }
+        rules[index] = newRule
+        saveSettings()
+        showStatus("Rule updated")
     }
 
     func loadDefaultRules() {

@@ -1,4 +1,5 @@
 import SwiftUI
+import os.log
 
 @main
 struct CleanSweepApp: App {
@@ -27,6 +28,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     static var shared: AppDelegate!
     let organizer = FileOrganizer()
     private var settingsWindow: NSWindow?
+    private let logger = Logger(subsystem: "com.soehlert.CleanSweep", category: "App")
+
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         AppDelegate.shared = self
@@ -50,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     self.settingsWindow = window
                     window.delegate = self
                     window.makeKeyAndOrderFront(nil)
-                    print("Settings window shown on startup")
+                    self.logger.debug("Settings window shown on startup")
                     return
                 }
             }
@@ -70,17 +73,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupStatusBar() {
-        print("Setting up status bar")
+        logger.debug("Setting up status bar")
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         guard let button = statusItem?.button else {
-            print("ERROR: No button found")
+            logger.error("ERROR: No button found")
             return
         }
 
         button.image = NSImage(systemSymbolName: "folder.badge.gearshape", accessibilityDescription: "CleanSweep")
-        print("Button image set: \(button.image != nil)")
+        logger.debug("Button image set: \(button.image != nil)")
 
         let menu = NSMenu()
         menu.addItem(NSMenuItem(title: "Open Settings", action: #selector(showSettings), keyEquivalent: ""))
@@ -88,11 +91,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem(title: "Quit CleanSweep", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 
         statusItem?.menu = menu
-        print("Menu assigned")
     }
 
     @objc private func showSettings() {
-        print("showSettings called")
+        logger.debug("showSettings called")
 
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)

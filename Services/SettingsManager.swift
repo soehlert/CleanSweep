@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 enum SettingsError: Error, LocalizedError {
     case cannotFindAppSupportDirectory
@@ -29,6 +30,8 @@ enum SettingsError: Error, LocalizedError {
 class SettingsManager {
     private let settingsFileName = "CleanSweepSettings.json"
     private let fileManager = FileManager.default
+    private let logger = Logger(subsystem: "com.soehlert.CleanSweep", category: "Settings")
+
 
     // Return an AppSettings object from our settings, nil, or a custom error from above
     func loadSettings() throws -> AppSettings? {
@@ -117,27 +120,27 @@ class SettingsManager {
     }
     
     func saveSettings(_ settings: AppSettings) throws {
-        print("Starting saveSettings...")
+        logger.debug("Starting saveSettings")
 
         do {
             try validateSettings(settings)
-            print("Validation passed")
+            logger.debug("Validation passed")
 
             let settingsURL = try getSettingsURL()
-            print("Got settings URL: \(settingsURL.path)")
+            logger.debug("Got settings URL: \(settingsURL.path)")
 
             try createBackup(at: settingsURL)
-            print("Backup created")
+            logger.debug("Backup created")
 
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             let data = try encoder.encode(settings)
-            print("Encoded successfully")
+            logger.debug("Encoded successfully")
 
             try data.write(to: settingsURL)
-            print("Saved successfully")
+            logger.debug("Saved successfully")
         } catch {
-            print("Save failed with error: \(error)")
+            logger.error("Save failed with error: \(error)")
             throw error
         }
     }

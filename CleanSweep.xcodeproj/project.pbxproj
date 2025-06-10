@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		24663AE22DF7DAEC008CF0A5 /* StatusMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24663AE12DF7DAEC008CF0A5 /* StatusMessageModifier.swift */; };
 		24663AE42DF7F6D7008CF0A5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 24663AE32DF7F6D1008CF0A5 /* README.md */; };
+		247A82A62DF89A59003888A9 /* EditRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247A82A52DF89A59003888A9 /* EditRuleView.swift */; };
 		248D65EF2DF500BC00F27CD0 /* CleanSweepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D65EC2DF500BC00F27CD0 /* CleanSweepApp.swift */; };
 		248D65F02DF500BC00F27CD0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D65ED2DF500BC00F27CD0 /* ContentView.swift */; };
 		248D65F12DF500BC00F27CD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248D65EA2DF500BC00F27CD0 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 /* Begin PBXFileReference section */
 		24663AE12DF7DAEC008CF0A5 /* StatusMessageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMessageModifier.swift; sourceTree = "<group>"; };
 		24663AE32DF7F6D1008CF0A5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		247A82A52DF89A59003888A9 /* EditRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleView.swift; sourceTree = "<group>"; };
 		248D65BE2DF3FB7D00F27CD0 /* CleanSweep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanSweep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248D65CC2DF3FB7E00F27CD0 /* CleanSweepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleanSweepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		248D65D62DF3FB7E00F27CD0 /* CleanSweepUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleanSweepUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +163,7 @@
 		248D65F32DF500C500F27CD0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				247A82A52DF89A59003888A9 /* EditRuleView.swift */,
 				248D66042DF5576700F27CD0 /* AddRuleView.swift */,
 				248D65FD2DF5465D00F27CD0 /* Components */,
 				248D65ED2DF500BC00F27CD0 /* ContentView.swift */,
@@ -355,6 +358,7 @@
 				248D66002DF5483A00F27CD0 /* MonitorView.swift in Sources */,
 				248D66072DF5FDC500F27CD0 /* OrganizingnRule.swift in Sources */,
 				248D660D2DF5FDDC00F27CD0 /* FileOrganizer.swift in Sources */,
+				247A82A62DF89A59003888A9 /* EditRuleView.swift in Sources */,
 				248D65FE2DF5465D00F27CD0 /* HeaderView.swift in Sources */,
 				24663AE22DF7DAEC008CF0A5 /* StatusMessageModifier.swift in Sources */,
 				248D66152DF6801100F27CD0 /* WelcomeView.swift in Sources */,
@@ -515,11 +519,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CleanSweep.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZVQJ9UCC2L;
+				CURRENT_PROJECT_VERSION = I;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -528,9 +533,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soehlert.CleanSweep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -543,11 +549,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CleanSweep.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZVQJ9UCC2L;
+				CURRENT_PROJECT_VERSION = I;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -556,9 +563,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soehlert.CleanSweep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

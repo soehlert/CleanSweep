@@ -1,8 +1,18 @@
+//
+//  EditRuleView.swift
+//  CleanSweep
+//
+//  Created by Sam Oehlert on 6/10/25.
+//
+
+
 import SwiftUI
 
-struct AddRuleView: View {
+struct EditRuleView: View {
     @ObservedObject var organizer: FileOrganizer
     @Environment(\.dismiss) private var dismiss
+
+    let ruleIndex: Int
 
     @State private var folderName = ""
     @State private var fileExtensions = ""
@@ -11,7 +21,7 @@ struct AddRuleView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Add Organizing Rule")
+            Text("Edit Organizing Rule")
                 .font(.title2)
                 .fontWeight(.semibold)
 
@@ -58,13 +68,23 @@ struct AddRuleView: View {
         }
         .padding()
         .frame(width: 400, height: 300)
+        .onAppear {
+            loadExistingRule()
+        }
         .alert("Error", isPresented: $showingError) {
             Button("OK") { }
         } message: {
             Text(errorMessage)
         }
     }
-    
+
+    private func loadExistingRule() {
+        guard ruleIndex < organizer.rules.count else { return }
+        let rule = organizer.rules[ruleIndex]
+        folderName = rule.folderName
+        fileExtensions = rule.fileExtensions.joined(separator: ", ")
+    }
+
     private func parseExtensions(_ input: String) -> [String] {
         return input
             .split(separator: ",")
@@ -96,15 +116,19 @@ struct AddRuleView: View {
             return
         }
 
-        // Check if folder already exists
-        if organizer.rules.contains(where: { $0.folderName == trimmedFolder }) {
+        // Check if folder name conflicts with existing rules (excluding current rule)
+        let existingRule = organizer.rules.enumerated().first { index, rule in
+            index != ruleIndex && rule.folderName == trimmedFolder
+        }
+
+        if existingRule != nil {
             showError("A rule for '\(trimmedFolder)' already exists")
             return
         }
 
-        // Create and add the rule using the correct method signature
-        let newRule = OrganizingRule(folderName: trimmedFolder, fileExtensions: extensions)
-        organizer.addRule(newRule)
+        // Update the rule
+        let updatedRule = OrganizingRule(folderName: trimmedFolder, fileExtensions: extensions)
+        organizer.updateRule(at: ruleIndex, with: updatedRule)
         dismiss()
     }
 
@@ -113,8 +137,3 @@ struct AddRuleView: View {
         showingError = true
     }
 }
-
-#Preview {
-    AddRuleView(organizer: FileOrganizer())
-}
-
