@@ -135,7 +135,7 @@ class SettingsManager {
             print("Encoded successfully")
 
             try data.write(to: settingsURL)
-            print("Saved successfully!")
+            print("Saved successfully")
         } catch {
             print("Save failed with error: \(error)")
             throw error

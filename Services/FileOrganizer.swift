@@ -5,7 +5,6 @@
 //  Created by Sam Oehlert on 6/8/25.
 //
 
-
 import Foundation
 import Combine
 
@@ -26,7 +25,6 @@ extension SettingsManager {
     }
 }
 
-
 class FileOrganizer: ObservableObject {
     @Published var statusMessage: String?
     @Published var isError: Bool = false
@@ -34,68 +32,80 @@ class FileOrganizer: ObservableObject {
     @Published var recentMoves: [FileMove] = []
     @Published var rules: [OrganizingRule] = []
     @Published var watchedFolder: URL
-    @Published var startOnLogin = false
     @Published var isFirstRun = true
-    
+
     private let fileManager = FileManager.default
     private let maxRecentMoves = 10
     private let settingsManager = SettingsManager()
     private var fileSystemWatcher: DispatchSourceFileSystemObject?
     private var watchedFolderDescriptor: Int32 = -1
-    
+
+    // Single background queue for all file operations
+    private let backgroundQueue = DispatchQueue(label: "com.cleansweep.fileorganizer", qos: .background)
+
     init() {
         self.watchedFolder = FileManager.default.urls(for: .downloadsDirectory,
                                                       in: .userDomainMask).first!
+
         loadSettings()
-        startOnLogin = LaunchAgentManager.isEnabled()
-        
+
         if !isFirstRun {
-            // Run a scan and start monitoring when app starts
+            print("Starting monitoring because !isFirstRun is true")
             scanNow()
             startMonitoring()
+        } else {
+            print("NOT starting monitoring because isFirstRun is true")
         }
     }
-    
+
+
     func completeFirstRunSetup() {
         isFirstRun = false
         saveSettings()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.scanNow()
+            self.startMonitoring()
+        }
     }
-    
+
     // Status Messages
     func showStatus(_ message: String, isError: Bool = false) {
         DispatchQueue.main.async {
             self.statusMessage = message
             self.isError = isError
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                self.statusMessage = nil
+                if self.statusMessage == message {
+                    self.statusMessage = nil
+                }
             }
         }
     }
-    
+
     private func loadSettings() {
         // Check if settings file exists first
         do {
             let settingsResult = try settingsManager.loadSettings()
             if let existingSettings = settingsResult {
+                print("Found existing settings: isFirstRun = \(existingSettings.isFirstRun)")
                 self.rules = existingSettings.rules
                 self.watchedFolder = URL(fileURLWithPath: existingSettings.watchedFolderPath)
                 self.isFirstRun = existingSettings.isFirstRun
+                showStatus("Settings loaded")
             } else {
-                // Time for welcome screen
+                print("No existing settings found, setting isFirstRun = true")
                 self.rules = []
                 self.isFirstRun = true
             }
         } catch {
+            print("Error loading settings: \(error), setting isFirstRun = true")
             self.rules = []
             self.isFirstRun = true
         }
-
-        showStatus("Settings loaded!")
-        showStatus("Watched Folder: \(watchedFolder.path)")
     }
 
-    private func saveSettings() {
+    func saveSettings() {
         let settings = AppSettings(rules: rules, watchedFolderPath: watchedFolder.path, isFirstRun: isFirstRun)
 
         if settingsManager.saveSettingsSafely(settings) {
@@ -104,25 +114,16 @@ class FileOrganizer: ObservableObject {
             showStatus("Failed to save settings", isError: true)
         }
     }
-    
+
     func setWatchedFolder(to folderURL: URL) {
         watchedFolder = folderURL
         saveSettings()
         showStatus("Changed watched folder to: \(watchedFolder.path)")
     }
-    
-    func setStartOnLogin(_ enabled: Bool) {
-        if enabled {
-            LaunchAgentManager.enable()
-            showStatus("Auto-start enabled")
-        } else {
-            LaunchAgentManager.disable()
-            showStatus("Auto-start disabled")
-        }
-        startOnLogin = enabled
-    }
-    
+
     func clearAllSettings() {
+        stopMonitoring()
+
         // Clear in-memory data
         rules.removeAll()
         isFirstRun = true
@@ -135,124 +136,122 @@ class FileOrganizer: ObservableObject {
             showStatus("Failed to clear settings", isError: true)
         }
     }
-    
+
     // Rule Management
     func addRule(_ rule: OrganizingRule) {
         rules.append(rule)
         saveSettings()
         showStatus("Rule added")
+        scanNow()
     }
-    
+
     func removeRule(at index: Int) {
         rules.remove(at: index)
         saveSettings()
         showStatus("Rule removed")
     }
-    
+
     func loadDefaultRules() {
         rules = settingsManager.getDefaultRules()
         saveSettings()
         showStatus("Default rules loaded")
     }
-    
+
     // Recent moves
     func addRecentMove(_ move: FileMove) {
-        recentMoves.insert(move, at: 0)
-        if recentMoves.count > maxRecentMoves {
-            recentMoves.removeLast()
+        DispatchQueue.main.async {
+            self.recentMoves.insert(move, at: 0)
+            if self.recentMoves.count > self.maxRecentMoves {
+                self.recentMoves.removeLast()
+            }
         }
     }
 
     func clearRecentMoves() {
         recentMoves.removeAll()
     }
-    
+
     // Monitoring
     func startMonitoring() {
+        guard !isMonitoring else { return }
+
         stopMonitoring()
-        
+
+        // Deal with files already in place
+        scanFiles()
+
         watchedFolderDescriptor = open(watchedFolder.path, O_EVTONLY)
-        
+
         guard watchedFolderDescriptor >= 0 else {
             showStatus("Failed to open directory for monitoring", isError: true)
             return
         }
-        
-        // Create event listener
+
+        // Create event listener using our single background queue
         fileSystemWatcher = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: watchedFolderDescriptor,
-            eventMask: .write, // Monitor for file writes/additions
-            queue: DispatchQueue.global(qos: .background)
+            eventMask: .write,
+            queue: backgroundQueue
         )
-        
-        // [weak self] == if this FileOrganizer object gets deleted, don't keep it alive just for this callback
+
         fileSystemWatcher?.setEventHandler { [weak self] in
-            self?.showStatus("Organizing new files")
-            
             // Add a small delay so we dont try to move a half finished file
-            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+            self?.backgroundQueue.asyncAfter(deadline: .now() + 0.5) {
                 self?.scanFiles()
             }
         }
-        
+
         fileSystemWatcher?.setCancelHandler { [weak self] in
             if let descriptor = self?.watchedFolderDescriptor, descriptor >= 0 {
                 close(descriptor)
                 self?.watchedFolderDescriptor = -1
             }
         }
-        
+
         // Start monitoring
         fileSystemWatcher?.resume()
-        
+
         DispatchQueue.main.async {
             self.isMonitoring = true
-            self.showStatus("Monitoring started - watching for new files")
+            self.showStatus("Monitoring started")
         }
     }
-    
+
     func stopMonitoring() {
         fileSystemWatcher?.cancel()
         fileSystemWatcher = nil
-        
-        // Valid file descriptors are positive integers
+
         if watchedFolderDescriptor >= 0 {
             close(watchedFolderDescriptor)
             watchedFolderDescriptor = -1
         }
-        
+
         DispatchQueue.main.async {
             self.isMonitoring = false
             self.showStatus("Monitoring stopped")
         }
-}
-    
-    func scanNow() {
-        showStatus("Startup scan running")
-        scanFiles()
     }
-    
+
+    func scanNow() {
+        backgroundQueue.async {
+            self.scanFiles()
+        }
+    }
+
     private func scanFiles() {
-        showStatus("Scanning for files")
-        
         do {
-            // Find all the files in the directory that aren't folders or hidden files; don't worry about metadata
             let contents = try fileManager.contentsOfDirectory(at: watchedFolder, includingPropertiesForKeys: nil)
             let files = contents.filter { !$0.hasDirectoryPath && !$0.lastPathComponent.hasPrefix(".") }
-                        
+
             for fileURL in files {
                 organizeFile(at: fileURL)
             }
-            
-            if files.isEmpty {
-                showStatus("No files to organize")
-            }
-            
+
         } catch {
             showStatus("Error scanning directory: \(error)", isError: true)
         }
     }
-    
+
     // File Organization
     private func organizeFile(at fileURL: URL) {
         let fileExtension = fileURL.pathExtension.lowercased()
@@ -262,6 +261,7 @@ class FileOrganizer: ObservableObject {
             return
         }
 
+        let watchedFolderName = watchedFolder.lastPathComponent
         let destinationFolder = watchedFolder.appendingPathComponent(matchingRule.folderName)
 
         do {
@@ -270,12 +270,11 @@ class FileOrganizer: ObservableObject {
             let finalDestination = getUniqueDestination(destinationURL)
 
             try fileManager.moveItem(at: fileURL, to: finalDestination)
+            showStatus("Moved file: \(fileName) to \(watchedFolderName)/\(matchingRule.folderName)")
 
             let move = FileMove(fileName: fileName, fromPath: watchedFolder.path, toPath: finalDestination.path)
+            addRecentMove(move)
 
-            DispatchQueue.main.async {
-                self.addRecentMove(move)
-            }
         } catch {
             showStatus("Error moving \(fileName): \(error)", isError: true)
         }
@@ -296,3 +295,4 @@ class FileOrganizer: ObservableObject {
         return destinationURL
     }
 }
+
