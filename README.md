@@ -27,10 +27,13 @@ CleanSweep is a lightweight macOS utility that automatically organizes your fold
 2. Extract the ZIP file to reveal the CleanSweep app
 3. Move CleanSweep.app to your Applications folder
 4. Right-click on CleanSweep and select "Open"
-5. Click "Open" when macOS asks about running an app from an unidentified developer
+5. It will tell you it wants to move it to the trash or cancel opening
+6. Open System Settings
+7. Privacy & Security
+8. In the Security subsection there will be something saying "CleanSweep was blocked to protect your mac" click open anyway
 
 > **Important Security Note**
-> Since this app is signed with a personal developer certificate rather than distributed through the Mac App Store, macOS will initially block it. This is normal behavior for apps distributed outside the App Store. The right-click and "Open" method bypasses this security warning safely.
+> Since this app is signed with a personal developer certificate rather than distributed through the Mac App Store, macOS will initially block it. This is normal behavior for apps distributed outside the App Store. Im not going to pay 100 dollars a year to distribute a free application I made mostly for myself. 
 
 ### Auto-Start Setup
 To set CleanSweep to automatically start at login, follow these steps:
