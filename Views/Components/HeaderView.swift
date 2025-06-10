@@ -5,7 +5,7 @@ struct HeaderView: View {
     @ObservedObject var organizer: FileOrganizer
 
     private enum Layout {
-        static let iconSize: CGFloat = 36
+        static let iconSize: CGFloat = 100
         static let dividerHeight: CGFloat = 1
         static let dividerOpacity: Double = 0.4
         static let spacing: CGFloat = 12
@@ -24,8 +24,6 @@ struct HeaderView: View {
                 }
                 .buttonStyle(.bordered)
                 .foregroundColor(.red)
-                Toggle("Start on Login", isOn: $organizer.startOnLogin)
-                    .toggleStyle(CheckboxToggleStyle())
             }
         }
         .frame(maxWidth: .infinity)
@@ -37,7 +35,9 @@ struct HeaderView: View {
             Image("cleansweep")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: Layout.iconSize, height: Layout.iconSize)
+                .frame(width: Layout.iconSize * 1.2, height: Layout.iconSize * 1.2)
+                .padding(.bottom, 2)
+                .foregroundStyle(.blue)
 
             Text("CleanSweep")
                 .font(.largeTitle)
@@ -83,17 +83,6 @@ struct HeaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, Layout.horizontalPadding)
-    }
-
-    private var startOnLoginToggle: some View {
-        Toggle("Start on Login", isOn: $organizer.startOnLogin)
-            .onChange(of: organizer.startOnLogin) { _, newValue in
-                organizer.setStartOnLogin(newValue)
-            }
-            .toggleStyle(.checkbox)
-            .font(.caption)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, Layout.horizontalPadding)
     }
 
     private func getTabInfo() -> (title: String, subtitle: String, dynamicInfo: String?) {

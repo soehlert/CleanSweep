@@ -69,16 +69,17 @@ struct RulesView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 ScrollView {
-                    VStack(spacing: 2) {
+                    VStack(spacing: 8) {
                         ForEach(Array(organizer.rules.enumerated()), id: \.element.id) { index, rule in
                             HStack {
                                 Text(rule.folderName)
-                                    .font(.headline)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
                                 
                                 Spacer()
                                 
                                 Text(rule.fileExtensions.joined(separator: ", "))
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(.secondary)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)

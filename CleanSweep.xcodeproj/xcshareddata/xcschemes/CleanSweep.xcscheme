@@ -21,6 +21,20 @@
                ReferencedContainer = "container:CleanSweep.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "24B5B1572DF69BBD004914D6"
+               BuildableName = "CleanSweepHelper.app"
+               BlueprintName = "CleanSweepHelper"
+               ReferencedContainer = "container:CleanSweep.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24663AE22DF7DAEC008CF0A5 /* StatusMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24663AE12DF7DAEC008CF0A5 /* StatusMessageModifier.swift */; };
+		24663AE42DF7F6D7008CF0A5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 24663AE32DF7F6D1008CF0A5 /* README.md */; };
 		248D65EF2DF500BC00F27CD0 /* CleanSweepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D65EC2DF500BC00F27CD0 /* CleanSweepApp.swift */; };
 		248D65F02DF500BC00F27CD0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D65ED2DF500BC00F27CD0 /* ContentView.swift */; };
 		248D65F12DF500BC00F27CD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248D65EA2DF500BC00F27CD0 /* Assets.xcassets */; };
@@ -20,7 +22,6 @@
 		248D660B2DF5FDD500F27CD0 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D660A2DF5FDD500F27CD0 /* SettingsManager.swift */; };
 		248D660D2DF5FDDC00F27CD0 /* FileOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D660C2DF5FDDC00F27CD0 /* FileOrganizer.swift */; };
 		248D660F2DF6030600F27CD0 /* RecentActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D660E2DF6030600F27CD0 /* RecentActivityView.swift */; };
-		248D66112DF60E6500F27CD0 /* LaunchAgentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D66102DF60E6500F27CD0 /* LaunchAgentManager.swift */; };
 		248D66152DF6801100F27CD0 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248D66142DF6801100F27CD0 /* WelcomeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +42,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		24B5B18B2DF6A6A5004914D6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		24663AE12DF7DAEC008CF0A5 /* StatusMessageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMessageModifier.swift; sourceTree = "<group>"; };
+		24663AE32DF7F6D1008CF0A5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		248D65BE2DF3FB7D00F27CD0 /* CleanSweep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanSweep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248D65CC2DF3FB7E00F27CD0 /* CleanSweepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleanSweepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		248D65D62DF3FB7E00F27CD0 /* CleanSweepUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleanSweepUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,11 +74,15 @@
 		248D660A2DF5FDD500F27CD0 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		248D660C2DF5FDDC00F27CD0 /* FileOrganizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOrganizer.swift; sourceTree = "<group>"; };
 		248D660E2DF6030600F27CD0 /* RecentActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActivityView.swift; sourceTree = "<group>"; };
-		248D66102DF60E6500F27CD0 /* LaunchAgentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAgentManager.swift; sourceTree = "<group>"; };
 		248D66142DF6801100F27CD0 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		24663AE52DF7F70B008CF0A5 /* Images */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Images;
+			sourceTree = "<group>";
+		};
 		248D65CF2DF3FB7E00F27CD0 /* CleanSweepTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CleanSweepTests;
@@ -104,6 +123,8 @@
 		248D65B52DF3FB7D00F27CD0 = {
 			isa = PBXGroup;
 			children = (
+				24663AE52DF7F70B008CF0A5 /* Images */,
+				24663AE32DF7F6D1008CF0A5 /* README.md */,
 				248D65EA2DF500BC00F27CD0 /* Assets.xcassets */,
 				248D65EB2DF500BC00F27CD0 /* CleanSweep.entitlements */,
 				248D65EC2DF500BC00F27CD0 /* CleanSweepApp.swift */,
@@ -155,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				248D660C2DF5FDDC00F27CD0 /* FileOrganizer.swift */,
-				248D66102DF60E6500F27CD0 /* LaunchAgentManager.swift */,
 				248D660A2DF5FDD500F27CD0 /* SettingsManager.swift */,
 			);
 			path = Services;
@@ -171,6 +191,7 @@
 		248D65FD2DF5465D00F27CD0 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				24663AE12DF7DAEC008CF0A5 /* StatusMessageModifier.swift */,
 				248D65FC2DF5465D00F27CD0 /* HeaderView.swift */,
 			);
 			path = Components;
@@ -186,10 +207,14 @@
 				248D65BA2DF3FB7D00F27CD0 /* Sources */,
 				248D65BB2DF3FB7D00F27CD0 /* Frameworks */,
 				248D65BC2DF3FB7D00F27CD0 /* Resources */,
+				24B5B18B2DF6A6A5004914D6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				24663AE52DF7F70B008CF0A5 /* Images */,
 			);
 			name = CleanSweep;
 			packageProductDependencies = (
@@ -293,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24663AE42DF7F6D7008CF0A5 /* README.md in Resources */,
 				248D65F12DF500BC00F27CD0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,12 +351,12 @@
 				248D66032DF5511D00F27CD0 /* RulesView.swift in Sources */,
 				248D65F02DF500BC00F27CD0 /* ContentView.swift in Sources */,
 				248D66092DF5FDCD00F27CD0 /* AppSettings.swift in Sources */,
-				248D66112DF60E6500F27CD0 /* LaunchAgentManager.swift in Sources */,
 				248D660B2DF5FDD500F27CD0 /* SettingsManager.swift in Sources */,
 				248D66002DF5483A00F27CD0 /* MonitorView.swift in Sources */,
 				248D66072DF5FDC500F27CD0 /* OrganizingnRule.swift in Sources */,
 				248D660D2DF5FDDC00F27CD0 /* FileOrganizer.swift in Sources */,
 				248D65FE2DF5465D00F27CD0 /* HeaderView.swift in Sources */,
+				24663AE22DF7DAEC008CF0A5 /* StatusMessageModifier.swift in Sources */,
 				248D66152DF6801100F27CD0 /* WelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,7 +514,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CleanSweep/CleanSweep.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CleanSweep.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -516,7 +542,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CleanSweep/CleanSweep.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CleanSweep.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;

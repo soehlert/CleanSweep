@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "1024.png",
+      "filename" : "cleansweep_icon_128x128.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "cleansweep_icon_256x256.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "cleansweep_icon_512x512.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -17,5 +19,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

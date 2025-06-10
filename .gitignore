@@ -116,3 +116,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+*.xcodeproj/xcshareddata/xcschemes/
+*.profraw
+CleanSweep.xcodeproj/project.xcworkspace/xcuserdata/
+CleanSweep.xcodeproj/xcuserdata/
